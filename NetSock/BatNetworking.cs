@@ -2,7 +2,7 @@
 
 namespace NetSock
 {
-    public class Class1
+    public static class BatNetworking
     {
     }
 }
