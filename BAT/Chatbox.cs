@@ -16,5 +16,10 @@ namespace BAT
         {
             InitializeComponent();
         }
+
+        private void UserLogin_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
