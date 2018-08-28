@@ -80,6 +80,7 @@
             this.PictureBox.Size = new System.Drawing.Size(113, 129);
             this.PictureBox.TabIndex = 6;
             this.PictureBox.TabStop = false;
+            this.PictureBox.Click += new System.EventHandler(this.PictureBox_Click);
             // 
             // Chatbox
             // 
