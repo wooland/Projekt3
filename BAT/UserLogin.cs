@@ -22,7 +22,7 @@ namespace BAT
         public UserLogin()
         {
             InitializeComponent();
-            pictureBox_loginImage.Image= Image.FromFile("../media/technology-c-sharp.png");
+            //pictureBox_loginImage.Image= Image.FromFile("../media/technology-c-sharp.png");
         }
 
         private void button_connect_Click(object sender, EventArgs e)
