@@ -16,5 +16,13 @@ namespace BAT
         {
             InitializeComponent();
         }
+
+        private void button_connect_Click(object sender, EventArgs e)
+        {
+            if (TextBox_receiverIP.Text==null)
+            {
+                MessageBox.Show("Please enter information into all fields");
+            }
+        }
     }
 }
