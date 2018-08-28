@@ -41,6 +41,8 @@
             this.label_userName = new System.Windows.Forms.Label();
             this.textBox_userPassword = new System.Windows.Forms.TextBox();
             this.label_userPassword = new System.Windows.Forms.Label();
+            this.pictureBox_loginImage = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_loginImage)).BeginInit();
             this.SuspendLayout();
             // 
             // TextBox_userIP
@@ -149,11 +151,21 @@
             this.label_userPassword.TabIndex = 12;
             this.label_userPassword.Text = "PassWord";
             // 
+            // pictureBox_loginImage
+            // 
+            this.pictureBox_loginImage.Location = new System.Drawing.Point(376, 13);
+            this.pictureBox_loginImage.Name = "pictureBox_loginImage";
+            this.pictureBox_loginImage.Size = new System.Drawing.Size(412, 295);
+            this.pictureBox_loginImage.TabIndex = 13;
+            this.pictureBox_loginImage.TabStop = false;
+            this.pictureBox_loginImage.Click += new System.EventHandler(this.pictureBox1_Click);
+            // 
             // UserLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.pictureBox_loginImage);
             this.Controls.Add(this.label_userPassword);
             this.Controls.Add(this.textBox_userPassword);
             this.Controls.Add(this.label_userName);
@@ -169,6 +181,7 @@
             this.Controls.Add(this.TextBox_userIP);
             this.Name = "UserLogin";
             this.Text = "UserLogin";
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox_loginImage)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -189,5 +202,6 @@
         private System.Windows.Forms.Label label_userName;
         private System.Windows.Forms.TextBox textBox_userPassword;
         private System.Windows.Forms.Label label_userPassword;
+        private System.Windows.Forms.PictureBox pictureBox_loginImage;
     }
 }

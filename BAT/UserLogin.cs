@@ -22,6 +22,7 @@ namespace BAT
         public UserLogin()
         {
             InitializeComponent();
+            pictureBox_loginImage.Image= Image.FromFile("../media/technology-c-sharp.png");
         }
 
         private void button_connect_Click(object sender, EventArgs e)
@@ -48,6 +49,11 @@ namespace BAT
                 reciever_IP = TextBox_receiverIP.Text;
                 reciever_port = textBox_receiverPort.Text;
             }
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
 
         }
     }
