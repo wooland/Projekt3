@@ -54,6 +54,7 @@
             this.AddMessageButton.TabIndex = 1;
             this.AddMessageButton.Text = "Add message";
             this.AddMessageButton.UseVisualStyleBackColor = true;
+            this.AddMessageButton.Click += new System.EventHandler(this.AddMessageButton_Click);
             // 
             // WriteBox
             // 

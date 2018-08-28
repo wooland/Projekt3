@@ -34,7 +34,12 @@ namespace BAT
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            //NameLabel.Items.Add(UserName.Text);
+        }
 
+        private void AddMessageButton_Click(object sender, EventArgs e)
+        {
+            ShowChatBox.Items.Add(WriteBox.Text);
         }
     }
 }
