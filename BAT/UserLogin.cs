@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -19,23 +21,26 @@ namespace BAT
         string reciever_IP;
         string reciever_port;
 
+        //public static Socket sck = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+
         public UserLogin()
         {
             InitializeComponent();
-            //pictureBox_loginImage.Image= Image.FromFile("../media/technology-c-sharp.png");
+           // sck.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+
         }
 
         private void button_connect_Click(object sender, EventArgs e)
         {
-            if (TextBox_receiverIP.Text=="" || textBox_receiverPort.Text == "")
+            if (TextBox_receiverIP.Text == "" || textBox_receiverPort.Text == "")
             {
                 MessageBox.Show("Please enter the proper IP/Port information into the receiver fields");
             }
-            if (TextBox_userIP.Text == "" || TextBox_userPort.Text=="")
+            if (TextBox_userIP.Text == "" || TextBox_userPort.Text == "")
             {
                 MessageBox.Show("Please enter the proper IP/Port information into the User fields");
             }
-            if (textBox_userName.Text == "" || textBox_userPassword.Text=="")
+            if (textBox_userName.Text == "" || textBox_userPassword.Text == "")
             {
                 MessageBox.Show("Please enter proper login information");
             }
@@ -49,12 +54,10 @@ namespace BAT
                 reciever_IP = TextBox_receiverIP.Text;
                 reciever_port = textBox_receiverPort.Text;
             }
-
         }
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
-
         }
     }
 }

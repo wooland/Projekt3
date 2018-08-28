@@ -16,8 +16,7 @@ namespace BAT
         public Chatbox()
         {
             InitializeComponent();
-           Socket sck = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-            sck.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
+           
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
