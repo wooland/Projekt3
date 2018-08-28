@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace BAT
 {
-    public partial class Form1 : Form
+    public partial class Chatbox : Form
     {
-        public Form1()
+        public Chatbox()
         {
             InitializeComponent();
         }

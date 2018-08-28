@@ -1,6 +1,6 @@
 ﻿namespace BAT
 {
-    partial class Form1
+    partial class UserLogin
     {
         /// <summary>
         /// Required designer variable.
