@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BAT.Models.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,9 +16,11 @@ namespace BAT
         [STAThread]
         static void Main()
         {
+            BATContext context = new BATContext();
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new UserLogin());
+            Application.Run(new UserLogin(context));
             Application.Run(new Chatbox());
         }
     }

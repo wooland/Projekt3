@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BAT.Models.Data;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -20,14 +21,12 @@ namespace BAT
         string user_Port;
         string reciever_IP;
         string reciever_port;
-
-        //public static Socket sck = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-
-        public UserLogin()
+        public BATContext context { get; set; }
+        public UserLogin(BATContext context)
         {
             InitializeComponent();
-           // sck.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true);
-
+            this.context = context;
+            //pictureBox_loginImage.Image= Image.FromFile("../media/technology-c-sharp.png");
         }
 
         private void button_connect_Click(object sender, EventArgs e)
@@ -46,6 +45,7 @@ namespace BAT
             }
             else
             {
+
                 userName = textBox_userName.Text;
                 user_PassWord = textBox_userPassword.Text;
                 user_IP = TextBox_userIP.Text;

@@ -6,16 +6,31 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 
-namespace NetSock
+namespace BATServer
 {
-    public static class BatNetworking
+    class Program
     {
+        static void Main(string[] args)
+        {
+
+            Server myServer = new Server();
+            Thread serverThread = new Thread(myServer.Run);
+            serverThread.Start();
+            serverThread.Join();
+
+
+            Console.ReadKey();
+        }
+
         public class Server
         {
             List<ClientHandler> clients = new List<ClientHandler>();
             public void Run()
             {
-                TcpListener listener = new TcpListener(IPAddress.Any, 5000);
+                Console.WriteLine("IP: " + GetLocalIPAddress());
+                int port = 5000;
+                Console.WriteLine("Port: " + port);
+                TcpListener listener = new TcpListener(IPAddress.Any, port);
                 Console.WriteLine("Server up and running, waiting for messages...");
 
                 try
@@ -71,6 +86,7 @@ namespace NetSock
                 Broadcast(client, "Client X has left the building...");
             }
         }
+
         public class ClientHandler
         {
             public TcpClient tcpclient;
@@ -103,69 +119,19 @@ namespace NetSock
                 }
             }
         }
-
-        public class Client
+        public static string GetLocalIPAddress()
         {
-            private TcpClient client;
-
-            public void Start(string UserIP)
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (var ip in host.AddressList)
             {
-                client = new TcpClient(UserIP, 5000);
-
-                Thread listenerThread = new Thread(Send);
-                listenerThread.Start();
-
-                Thread senderThread = new Thread(Listen);
-                senderThread.Start();
-
-                senderThread.Join();
-                listenerThread.Join();
-            }
-
-            public void Listen()
-            {
-                string message = "";
-
-                try
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
                 {
-                    while (true)
-                    {
-                        NetworkStream n = client.GetStream();
-                        message = new BinaryReader(n).ReadString();
-                        Console.WriteLine("Other: " + message);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
+                    return ip.ToString();
                 }
             }
-
-            public void Send()
-            {
-                string message = "";
-
-                try
-                {
-                    while (!message.Equals("quit"))
-                    {
-                        NetworkStream n = client.GetStream();
-
-                        message = Console.ReadLine();
-                        BinaryWriter w = new BinaryWriter(n);
-                        w.Write(message);
-                        w.Flush();
-                    }
-
-                    client.Close();
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-            }
+            throw new Exception("No network adapters with an IPv4 address in the system!");
         }
-
-
     }
+
 }
+
