@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BAT.Models.Data;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,10 +14,12 @@ namespace BAT
 {
     public partial class Chatbox : Form
     {
-        public Chatbox()
+        public BATContext context { get; set; }
+        public Chatbox(BATContext context)
         {
+            this.context = context;
             InitializeComponent();
-           
+            NameLabel.Items.Add(context.BatUsers.FirstOrDefault().Name);
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -36,7 +39,7 @@ namespace BAT
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //NameLabel.Items.Add(UserName.Text);
+           
 
         }
 

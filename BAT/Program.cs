@@ -21,7 +21,7 @@ namespace BAT
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new UserLogin(context));
-            Application.Run(new Chatbox());
+            Application.Run(new Chatbox(context));
         }
     }
 }

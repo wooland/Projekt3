@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using Newtonsoft.Json;
 
 namespace BATServer
 {
@@ -106,8 +107,9 @@ namespace BATServer
                     {
                         NetworkStream n = tcpclient.GetStream();
                         message = new BinaryReader(n).ReadString();
-                        myServer.Broadcast(this, message);
-                        Console.WriteLine(message);
+                        ReadMessage(message);
+                        //myServer.Broadcast(this, message);
+                        //Console.WriteLine(message);
                     }
 
                     myServer.DisconnectClient(this);
@@ -117,6 +119,11 @@ namespace BATServer
                 {
                     Console.WriteLine(ex.Message);
                 }
+            }
+
+            private void ReadMessage(string message)
+            {
+                var deSerializedMessage = JsonConvert.DeserializeObject(message);
             }
         }
         public static string GetLocalIPAddress()
