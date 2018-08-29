@@ -58,7 +58,8 @@ namespace BAT
 
                 Client client = new Client();
                 BatProtocol p = new BatProtocol()
-                { UserName = userName, Password = user_PassWord, RecieverIP = reciever_IP, RecieverPort = reciever_port, UserIP = user_IP, UserPort = user_Port };
+                { Type = "Login", Version = 1, UserName = userName, Password = user_PassWord,
+                    RecieverIP = reciever_IP, RecieverPort = reciever_port, UserIP = user_IP, UserPort = user_Port };
 
                 Object protocol = p;
                 Thread batThread = new Thread(client.SendProtocol);
