@@ -23,15 +23,15 @@ namespace BAT
         int user_Port;
         string reciever_IP;
         int reciever_port;
-        public BATContext context { get; set; }
+        public BATContext Context { get; set; }
         public UserLogin(BATContext context)
         {
             InitializeComponent();
-            this.context = context;
+            this.Context = context;
             //pictureBox_loginImage.Image= Image.FromFile("../media/technology-c-sharp.png");
         }
 
-        private void button_connect_Click(object sender, EventArgs e)
+        private void Button_connect_Click(object sender, EventArgs e)
         {
             if (TextBox_receiverIP.Text == "" || textBox_receiverPort.Text == "")
             {
@@ -62,7 +62,7 @@ namespace BAT
             }
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
+        private void PictureBox1_Click(object sender, EventArgs e)
         {
         }
     }

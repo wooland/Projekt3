@@ -117,7 +117,7 @@
             this.button_connect.TabIndex = 8;
             this.button_connect.Text = "Connect / Login";
             this.button_connect.UseVisualStyleBackColor = true;
-            this.button_connect.Click += new System.EventHandler(this.button_connect_Click);
+            this.button_connect.Click += new System.EventHandler(this.Button_connect_Click);
             // 
             // textBox_userName
             // 
@@ -158,7 +158,7 @@
             this.pictureBox_loginImage.Size = new System.Drawing.Size(412, 295);
             this.pictureBox_loginImage.TabIndex = 13;
             this.pictureBox_loginImage.TabStop = false;
-            this.pictureBox_loginImage.Click += new System.EventHandler(this.pictureBox1_Click);
+            this.pictureBox_loginImage.Click += new System.EventHandler(this.PictureBox1_Click);
             // 
             // UserLogin
             // 
