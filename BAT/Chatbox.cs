@@ -19,28 +19,23 @@ namespace BAT
         {
             this.context = context;
             InitializeComponent();
-            NameLabel.Items.Add(context.BatUsers.FirstOrDefault().Name);
         }
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            
         }
 
         private void WriteTextBox_TextChanged(object sender, EventArgs e)
         {
-
         }
 
         private void label1_Click(object sender, EventArgs e)
         {
-
         }
 
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
-           
-
+            //NameLabel.Items.Add(UserName.Text);
         }
 
         private void AddMessageButton_Click(object sender, EventArgs e)
@@ -50,7 +45,6 @@ namespace BAT
 
         private void PictureBox_Click(object sender, EventArgs e)
         {
-            
         }
     }
 }
