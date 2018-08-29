@@ -5,15 +5,24 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using BAT.Models.Data;
+using NetSock;
 using Newtonsoft.Json;
+
 
 namespace BATServer
 {
-    class Program
+    class BATServer1
     {
+        public static BATContext context { get; set; }
+        //public BATServer1(BATContext context)
+        //{
+        //    this.context = context;
+        //}
+
         static void Main(string[] args)
         {
-
+            context = new BATContext();
             Server myServer = new Server();
             Thread serverThread = new Thread(myServer.Run);
             serverThread.Start();
@@ -123,7 +132,12 @@ namespace BATServer
 
             private void ReadMessage(string message)
             {
-                var deSerializedMessage = JsonConvert.DeserializeObject(message);
+                BatProtocol deSerializedMessage = JsonConvert.DeserializeObject<BatProtocol>(message);
+                
+                Console.WriteLine(deSerializedMessage.Type);
+                Console.WriteLine(deSerializedMessage.Value);
+
+                Console.WriteLine(context.BatUsers.FirstOrDefault());
             }
         }
         public static string GetLocalIPAddress()
