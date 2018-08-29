@@ -23,12 +23,14 @@ namespace BATClient
     {
         private TcpClient client;
 
+        
         public void Start()
         {
-            client = new TcpClient("10.20.38.150", 5000);
+            BatProtocol testProtocol = new BatProtocol { Type = "Login", UserName = "Batman", Password = "BBBB", RecieverIP = "10.20.38.150", RecieverPort = 5000 };
+            client = new TcpClient(testProtocol.RecieverIP, testProtocol.RecieverPort);
 
-            //Thread batThread = new Thread(SendProtocol);
-            //batThread.Start();
+            Thread batThread = new Thread(SendProtocol);
+            batThread.Start(testProtocol);
 
             Thread listenerThread = new Thread(Send);
             listenerThread.Start();
@@ -86,8 +88,7 @@ namespace BATClient
         public void SendProtocol(Object input)
         {
             BatProtocol p = (BatProtocol)input;
-
-            client = new TcpClient(p.UserIP , p.UserPort);
+            client = new TcpClient(p.RecieverIP, p.RecieverPort);
 
             NetworkStream n = client.GetStream();
             BinaryWriter w = new BinaryWriter(n);
