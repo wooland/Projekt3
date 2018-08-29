@@ -22,6 +22,7 @@ namespace BATServer
 
         static void Main(string[] args)
         {
+            Console.WriteLine("IP: " + GetLocalIPAddress());
             context = new BATContext();
             Server myServer = new Server();
             Thread serverThread = new Thread(myServer.Run);
@@ -132,12 +133,33 @@ namespace BATServer
 
             private void ReadMessage(string message)
             {
+
                 BatProtocol deSerializedMessage = JsonConvert.DeserializeObject<BatProtocol>(message);
                 
-                Console.WriteLine(deSerializedMessage.Type);
-                Console.WriteLine(deSerializedMessage.Value);
-
-                Console.WriteLine(context.BatUsers.FirstOrDefault());
+                //Testar om message är av typen login
+                if(deSerializedMessage.Type == "Login")
+                {
+                    //kollar om username finns i databasen
+                    if(context.BatUsers.ToList()
+                        .Exists(u => u.Name == deSerializedMessage.UserName))
+                    {
+                        Console.WriteLine(deSerializedMessage.UserName + "Exists");
+                        
+                        //Kollar om lösenord matchar med det som är lagt in i databasen under samma login.
+                        if(context.BatUsers.ToList()
+                            .Find(u => u.Name == deSerializedMessage.UserName)
+                            .Password == deSerializedMessage.Password)
+                        {
+                            Console.WriteLine("Login Successful");
+                        }
+                    }
+                    
+                } else
+                {
+                    Console.WriteLine("Unhandled message Type");
+                }
+            
+                
             }
         }
         public static string GetLocalIPAddress()

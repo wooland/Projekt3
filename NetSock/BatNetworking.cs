@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -108,9 +109,29 @@ namespace NetSock
         {
             private TcpClient client;
 
-            public void Start(string UserIP)
+            #region How Start used to look like
+            //public void Start(string UserIP)
+            //{
+            //    client = new TcpClient(UserIP, 5000);
+
+            //    Thread listenerThread = new Thread(Send);
+            //    listenerThread.Start();
+
+            //    Thread senderThread = new Thread(Listen);
+            //    senderThread.Start();
+
+            //    senderThread.Join();
+            //    listenerThread.Join();
+            //}
+            #endregion
+
+            public void Start()
             {
-                client = new TcpClient(UserIP, 5000);
+                BatProtocol testProtocol = new BatProtocol { Type = "Login", UserName = "Batman", Password = "BBBB", RecieverIP = "10.20.38.150", RecieverPort = 5000 };
+                client = new TcpClient(testProtocol.RecieverIP, testProtocol.RecieverPort);
+
+                Thread batThread = new Thread(SendProtocol);
+                batThread.Start(testProtocol);
 
                 Thread listenerThread = new Thread(Send);
                 listenerThread.Start();
@@ -120,6 +141,7 @@ namespace NetSock
 
                 senderThread.Join();
                 listenerThread.Join();
+                batThread.Join();
             }
 
             public void Listen()
@@ -163,6 +185,17 @@ namespace NetSock
                 {
                     Console.WriteLine(ex.Message);
                 }
+            }
+            public void SendProtocol(Object input)
+            {
+                BatProtocol p = (BatProtocol)input;
+                client = new TcpClient(p.RecieverIP, p.RecieverPort);
+
+                NetworkStream n = client.GetStream();
+                BinaryWriter w = new BinaryWriter(n);
+
+                string protocol = JsonConvert.SerializeObject(p);
+                w.Write(protocol);
             }
         }
 
