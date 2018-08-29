@@ -135,7 +135,7 @@ namespace BATServer
                 BatProtocol deSerializedMessage = JsonConvert.DeserializeObject<BatProtocol>(message);
                 
                 Console.WriteLine(deSerializedMessage.Type);
-                Console.WriteLine(deSerializedMessage.Value);
+                Console.WriteLine(deSerializedMessage.Message);
 
                 Console.WriteLine(context.BatUsers.FirstOrDefault());
             }

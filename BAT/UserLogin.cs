@@ -1,5 +1,6 @@
 ﻿using BAT.Models.Data;
 using NetSock;
+using BATClient;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,6 +13,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static NetSock.BatNetworking;
 
 namespace BAT
 {
@@ -47,18 +49,22 @@ namespace BAT
             }
             else
             {
-                BatProtocol protocol = new BatProtocol();
-                //Thread batThread = new Thread(SendProtocol);
-                //batThread.Start();
-
-
-                protocol.UserName = textBox_userName.Text;
-                protocol.Password = textBox_userPassword.Text;
+                userName = textBox_userName.Text;
+                user_PassWord = textBox_userPassword.Text;
                 user_IP = TextBox_userIP.Text;
                 user_Port = Convert.ToInt32(TextBox_userPort.Text);
 
                 reciever_IP = TextBox_receiverIP.Text;
                 reciever_port = Convert.ToInt32(textBox_receiverPort.Text);
+
+                Client client = new Client();
+                BatProtocol p = new BatProtocol()
+                { UserName = userName, Password = user_PassWord, RecieverIP = reciever_IP, RecieverPort = reciever_port, UserIP = user_IP, UserPort = user_Port };
+
+                Object protocol = p;
+                Thread batThread = new Thread(client.SendProtocol);
+                batThread.Start(protocol);
+                batThread.Join();
             }
         }
 

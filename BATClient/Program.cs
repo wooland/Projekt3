@@ -83,16 +83,17 @@ namespace BATClient
                 Console.WriteLine(ex.Message);
             }
         }
-        public void SendProtocol(BatProtocol p, string userIP, int userPort)
+        public void SendProtocol(Object input)
         {
-            client = new TcpClient(userIP, userPort);
+            BatProtocol p = (BatProtocol)input;
+
+            client = new TcpClient(p.UserIP , p.UserPort);
 
             NetworkStream n = client.GetStream();
             BinaryWriter w = new BinaryWriter(n);
 
             string protocol = JsonConvert.SerializeObject(p);
             w.Write(protocol);
-            
         }
     }
 }
