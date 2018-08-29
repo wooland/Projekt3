@@ -1,6 +1,5 @@
 ﻿using BAT.Models.Data;
 using NetSock;
-using BATClient;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
