@@ -79,16 +79,21 @@ namespace BATClient
         }
         public void SendProtocol()
         {
-            string message = "";
+            //string message = "";
             BatProtocol p = new BatProtocol();
+            p.Type = "login";
+            p.UID = 1;
+            p.Value = "BBBB";
+            p.Version = 1;
+
             NetworkStream n = client.GetStream();
 
-            message = Console.ReadLine();
+            //message = Console.ReadLine();
             BinaryWriter w = new BinaryWriter(n);
 
 
-            //string protocol = JsonConvert.SerializeObject(p);
-            //w.Write(protocol); 
+           //string protocol = JsonConvert.SerializeObject(p);
+           w.Write(protocol); 
         }
     }
 }
