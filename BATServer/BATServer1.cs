@@ -132,12 +132,22 @@ namespace BATServer
 
             private void ReadMessage(string message)
             {
+
                 BatProtocol deSerializedMessage = JsonConvert.DeserializeObject<BatProtocol>(message);
                 
-                Console.WriteLine(deSerializedMessage.Type);
-                Console.WriteLine(deSerializedMessage.Value);
+                if(deSerializedMessage.Type == "Login")
+                {
+                    Console.WriteLine(deSerializedMessage.Type);
+                    Console.WriteLine(deSerializedMessage.UserName);
+                    Console.WriteLine(deSerializedMessage.Password);
 
-                Console.WriteLine(context.BatUsers.FirstOrDefault());
+                    Console.WriteLine(context.BatUsers.FirstOrDefault().Name);
+                } else
+                {
+                    Console.WriteLine("Unhandled message Type");
+                }
+            
+                
             }
         }
         public static string GetLocalIPAddress()
