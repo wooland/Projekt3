@@ -1,4 +1,5 @@
 ﻿using NetSock;
+using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Net.Sockets;
@@ -15,6 +16,7 @@ namespace BATClient
             Thread clientThread = new Thread(myClient.Start);
             clientThread.Start();
             clientThread.Join();
+
         }
     }
     public class Client
@@ -25,6 +27,9 @@ namespace BATClient
         {
             client = new TcpClient("10.20.38.150", 5000);
 
+            //Thread batThread = new Thread(SendProtocol);
+            //batThread.Start();
+
             Thread listenerThread = new Thread(Send);
             listenerThread.Start();
 
@@ -33,6 +38,7 @@ namespace BATClient
 
             senderThread.Join();
             listenerThread.Join();
+            //batThread.Join();
         }
 
         public void Listen()
@@ -77,23 +83,16 @@ namespace BATClient
                 Console.WriteLine(ex.Message);
             }
         }
-        public void SendProtocol()
+        public void SendProtocol(BatProtocol p, string userIP, int userPort)
         {
-            //string message = "";
-            BatProtocol p = new BatProtocol();
-            p.Type = "login";
-            p.UID = 1;
-            p.Value = "BBBB";
-            p.Version = 1;
+            client = new TcpClient(userIP, userPort);
 
             NetworkStream n = client.GetStream();
-
-            //message = Console.ReadLine();
             BinaryWriter w = new BinaryWriter(n);
 
-
-           //string protocol = JsonConvert.SerializeObject(p);
-           w.Write(protocol); 
+            string protocol = JsonConvert.SerializeObject(p);
+            w.Write(protocol);
+            
         }
     }
 }

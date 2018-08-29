@@ -1,4 +1,5 @@
 ﻿using BAT.Models.Data;
+using NetSock;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,6 +9,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -18,9 +20,9 @@ namespace BAT
         string userName;
         string user_PassWord;
         string user_IP;
-        string user_Port;
+        int user_Port;
         string reciever_IP;
-        string reciever_port;
+        int reciever_port;
         public BATContext context { get; set; }
         public UserLogin(BATContext context)
         {
@@ -45,14 +47,18 @@ namespace BAT
             }
             else
             {
+                BatProtocol protocol = new BatProtocol();
+                //Thread batThread = new Thread(SendProtocol);
+                //batThread.Start();
 
-                userName = textBox_userName.Text;
-                user_PassWord = textBox_userPassword.Text;
+
+                protocol.UserName = textBox_userName.Text;
+                protocol.Password = textBox_userPassword.Text;
                 user_IP = TextBox_userIP.Text;
-                user_Port = TextBox_userPort.Text;
+                user_Port = Convert.ToInt32(TextBox_userPort.Text);
 
                 reciever_IP = TextBox_receiverIP.Text;
-                reciever_port = textBox_receiverPort.Text;
+                reciever_port = Convert.ToInt32(textBox_receiverPort.Text);
             }
         }
 

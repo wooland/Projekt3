@@ -267,6 +267,12 @@
   <ItemGroup>
     <Content Include="SQL DATA\BAT.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NetSock\NetSock.csproj">
+      <Project>{E1BB77D3-EBFD-429D-9E36-DB00363C5348}</Project>
+      <Name>NetSock</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
