@@ -44,7 +44,7 @@
             this.ShowChatBox.Name = "ShowChatBox";
             this.ShowChatBox.Size = new System.Drawing.Size(586, 436);
             this.ShowChatBox.TabIndex = 0;
-            this.ShowChatBox.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
+            this.ShowChatBox.SelectedIndexChanged += new System.EventHandler(this.ListBox1_SelectedIndexChanged);
             // 
             // AddMessageButton
             // 
@@ -71,7 +71,7 @@
             this.NameLabel.Size = new System.Drawing.Size(113, 36);
             this.NameLabel.TabIndex = 5;
             this.NameLabel.UseCompatibleStateImageBehavior = false;
-            this.NameLabel.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
+            this.NameLabel.SelectedIndexChanged += new System.EventHandler(this.ListView1_SelectedIndexChanged);
             // 
             // PictureBox
             // 

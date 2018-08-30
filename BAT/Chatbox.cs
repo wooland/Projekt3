@@ -24,8 +24,8 @@ namespace BAT
 
         public string messType = "standard responsmessage";
 
-        public BATContext context { get; set; }
-        public string timeStamp = DateTime.Now.ToShortTimeString();
+        public BATContext Context { get; set; }
+        public string timeStamp;
 
         public Chatbox()
         {
@@ -40,7 +40,7 @@ namespace BAT
         public Chatbox(BATContext context) : this()
         {
             
-            this.context = context;
+            this.Context = context;
             
             
 
@@ -50,14 +50,14 @@ namespace BAT
         public Chatbox(BATContext context, TcpClient client) : this()
         {
 
-            this.context = context;
+            this.Context = context;
             this.client = client;
 
         }
 
 
 
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void ListBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
         }
 
@@ -65,19 +65,18 @@ namespace BAT
         {
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void Label1_Click(object sender, EventArgs e)
         {
         }
 
-        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        private void ListView1_SelectedIndexChanged(object sender, EventArgs e)
         {
             //NameLabel.Items.Add(UserName.Text);
         }
 
         public void AddMessageButton_Click(object sender, EventArgs e)
         {
-            BatProtocol bob = new BatProtocol {Type = "PM", Message = WriteBox.Text, RecieverIP = "10.20.38.150", RecieverPort = 5000 };
-            
+            BatProtocol bob = new BatProtocol {Type = "PM", Message = WriteBox.Text };
             SendProtocol(bob);
 
             
@@ -114,7 +113,7 @@ namespace BAT
                     }
                     else if (deSerializedMessage.Type == "SM")
                     {
-                       
+                        timeStamp = DateTime.Now.ToShortTimeString();
                         ShowChatBox.Items.Add($"{timeStamp}: " + deSerializedMessage.Message.ToString());
 
                     }
