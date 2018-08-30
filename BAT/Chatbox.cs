@@ -30,19 +30,19 @@ namespace BAT
         public Chatbox()
         {
             InitializeComponent();
-
             CheckForIllegalCrossThreadCalls = false;
-
             Thread batListener = new Thread(Listen);
             batListener.Start();
         }
 
         public Chatbox(BATContext context) : this()
         {
-            
             this.Context = context;
-            
-            
+            var listOfUser = context.BatUsers.ToList();
+            foreach (var item in listOfUser)
+            {
+                Listbox_of_Users.Items.Add(item.Name);
+            }
 
             //ShowChatBox.Text = client.messType;
 
