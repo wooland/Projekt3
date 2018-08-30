@@ -91,5 +91,24 @@ namespace BAT
         private void PictureBox1_Click(object sender, EventArgs e)
         {
         }
+
+        private void button_Get_LocalIP_Click(object sender, EventArgs e)
+        {
+            TextBox_userIP.Text = GetLocalIPAddress();
+            TextBox_receiverIP.Text = GetLocalIPAddress();
+        }
+
+        public static string GetLocalIPAddress()
+        {
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (var ip in host.AddressList)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    return ip.ToString();
+                }
+            }
+            throw new Exception("No network adapters with an IPv4 address in the system!");
+        }
     }
 }

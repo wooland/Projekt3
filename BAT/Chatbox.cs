@@ -18,7 +18,7 @@ namespace BAT
     public partial class Chatbox : Form
     {
         public BATContext context { get; set; }
-
+        public DateTime timeStamp;
         public Client client;
         public Chatbox(BATContext context, Client client)
         {
@@ -56,11 +56,10 @@ namespace BAT
 
         public void AddMessageButton_Click(object sender, EventArgs e)
         {
-            //ShowChatBox.Items.Add(WriteBox.Text);
             BatProtocol bob = new BatProtocol {Type = "PM", Message = WriteBox.Text, RecieverIP = "10.20.38.150", RecieverPort = 5000 };
             object temp = JsonConvert.SerializeObject(bob);
             client.SendProtocol(bob);
-            ShowChatBox.Items.Add(client.messType);
+            ShowChatBox.Items.Add($"{timeStamp.TimeOfDay.Days} {timeStamp.TimeOfDay.Hours}: " + client.messType);
         }
 
         private void PictureBox_Click(object sender, EventArgs e)
