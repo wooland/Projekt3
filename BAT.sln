@@ -7,9 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BAT", "BAT\BAT.csproj", "{5
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetSock", "NetSock\NetSock.csproj", "{E1BB77D3-EBFD-429D-9E36-DB00363C5348}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BATServer", "BATServer\BATServer.csproj", "{C308F29E-C074-480C-94EC-EB9FAD0FCC0D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BATClient", "BATClient\BATClient.csproj", "{8DD22654-AE77-4B55-91B9-C868B24E4344}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BATServer", "BATServer\BATServer.csproj", "{C308F29E-C074-480C-94EC-EB9FAD0FCC0D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +27,6 @@ Global
 		{C308F29E-C074-480C-94EC-EB9FAD0FCC0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C308F29E-C074-480C-94EC-EB9FAD0FCC0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C308F29E-C074-480C-94EC-EB9FAD0FCC0D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8DD22654-AE77-4B55-91B9-C868B24E4344}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8DD22654-AE77-4B55-91B9-C868B24E4344}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8DD22654-AE77-4B55-91B9-C868B24E4344}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8DD22654-AE77-4B55-91B9-C868B24E4344}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

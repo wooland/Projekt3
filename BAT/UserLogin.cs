@@ -1,10 +1,12 @@
 ﻿using BAT.Models.Data;
 using NetSock;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -24,6 +26,12 @@ namespace BAT
         int user_Port;
         string reciever_IP;
         int reciever_port;
+
+        public TcpClient client;
+
+        public string messType = "standard responsmessage";
+
+
         public BATContext Context { get; set; }
         public UserLogin(BATContext context)
         {
@@ -70,20 +78,18 @@ namespace BAT
                     RecieverIP = reciever_IP, RecieverPort = reciever_port, UserIP = user_IP, UserPort = user_Port };
 
 
-                TcpClient tcpclient = new TcpClient(p.RecieverIP, p.RecieverPort);
-                Client client = new Client(tcpclient);
+                client = new TcpClient(p.RecieverIP, p.RecieverPort);
+                //Client client = new Client(tcpclient);
 
-                Thread batListener = new Thread(client.Listen);
+                Thread batListener = new Thread(Listen);
                 batListener.Start();
 
-                Thread batThread = new Thread(client.SendProtocol);
+                Thread batThread = new Thread(SendProtocol);
                 batThread.Start(p);
 
                 
 
-                var x = new Chatbox(Context, client);
-                x.ShowDialog();
-
+               
                 batThread.Join();
             }
         }
@@ -110,5 +116,81 @@ namespace BAT
             }
             throw new Exception("No IP");
         }
+        
+        public void Listen()
+        {
+            string message = "In case of no inputstring: This is the response";
+
+            try
+            {
+                while (true)
+                {
+                    //Här kommer svarsobjektet
+                    NetworkStream n = client.GetStream();
+                    message = new BinaryReader(n).ReadString();
+                    //dekoda message till objekt
+                    BatProtocol deSerializedMessage = JsonConvert.DeserializeObject<BatProtocol>(message);
+                    //Console.WriteLine("MessageType: " + deSerializedMessage.Type);
+
+                    this.messType = deSerializedMessage.Type;
+
+                    if (deSerializedMessage.Type == "Ok")
+                    {
+                        
+                        var x = new Chatbox(Context, client);
+                        x.ShowDialog();
+                        break;
+
+                    }
+                    else if (deSerializedMessage.Type == "SM")
+                    {
+                        messType = deSerializedMessage.Message;
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        public void Send()
+        {
+            string message = "";
+
+            try
+            {
+                while (!message.Equals("quit"))
+                {
+                    NetworkStream n = client.GetStream();
+
+                    message = Console.ReadLine();
+                    BinaryWriter w = new BinaryWriter(n);
+                    w.Write(message);
+                    w.Flush();
+                }
+
+                client.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+        public void SendProtocol(Object input)
+        {
+            BatProtocol p = (BatProtocol)input;
+            //client = new TcpClient(p.RecieverIP, p.RecieverPort);
+
+            NetworkStream n = client.GetStream();
+            BinaryWriter w = new BinaryWriter(n);
+
+            string protocol = JsonConvert.SerializeObject(input);
+            w.Write(protocol);
+        }
     }
 }
+
+
+    

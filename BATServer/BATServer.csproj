@@ -16,7 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BATClient\BATClient.csproj" />
     <ProjectReference Include="..\BAT\BAT.csproj" />
     <ProjectReference Include="..\NetSock\NetSock.csproj" />
   </ItemGroup>
