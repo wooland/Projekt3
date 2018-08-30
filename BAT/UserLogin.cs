@@ -139,12 +139,12 @@ namespace BAT
                         
                         var x = new Chatbox(Context, client);
                         x.ShowDialog();
-                        break;
+                        //break;
 
                     }
                     else if (deSerializedMessage.Type == "SM")
                     {
-                        messType = deSerializedMessage.Message;
+                        //messType = deSerializedMessage.Message;
 
                     }
                 }

@@ -32,6 +32,9 @@ namespace BAT
             InitializeComponent();
 
             CheckForIllegalCrossThreadCalls = false;
+
+            Thread batListener = new Thread(Listen);
+            batListener.Start();
         }
 
         public Chatbox(BATContext context) : this()
@@ -77,8 +80,7 @@ namespace BAT
             
             SendProtocol(bob);
 
-            Thread batListener = new Thread(Listen);
-            batListener.Start();
+            
 
             //ShowChatBox.Items.Add($"{timeStamp}: " + client.messType);
         }
