@@ -28,8 +28,6 @@ namespace BATServer
             Thread serverThread = new Thread(myServer.Run);
             serverThread.Start();
             serverThread.Join();
-
-
             Console.ReadKey();
         }
 
@@ -118,7 +116,7 @@ namespace BATServer
                         NetworkStream n = tcpclient.GetStream();
                         message = new BinaryReader(n).ReadString();
                         ReadMessage(message);
-                        //myServer.Broadcast(this, message);
+                        myServer.Broadcast(this, message);
                         //Console.WriteLine(message);
                     }
 
@@ -139,6 +137,7 @@ namespace BATServer
                 //Testar om message är av typen login
                 if(deSerializedMessage.Type == "Login")
                 {
+                    Console.WriteLine("logging in...");
                     //kollar om username finns i databasen
                     if(context.BatUsers.ToList()
                         .Exists(u => u.Name == deSerializedMessage.UserName))
@@ -151,15 +150,34 @@ namespace BATServer
                             .Password == deSerializedMessage.Password)
                         {
                             Console.WriteLine("Login Successful");
+                            //Skickar message i retur
+                            NetworkStream n = tcpclient.GetStream();
+                            BatProtocol ok = new BatProtocol { Type = "Ok"};
+                            
+                            new BinaryWriter(n).Write(JsonConvert.SerializeObject(ok));
+                            
                         }
                     }
                     
-                } else
+                }
+
+                else if(deSerializedMessage.Type == "PM")
+                {
+                    Console.WriteLine("PM");
+
+                    NetworkStream n = tcpclient.GetStream();
+
+                    deSerializedMessage.Type = "SM";
+                    new BinaryWriter(n).Write(JsonConvert.SerializeObject(deSerializedMessage));
+
+                }
+
+                else
                 {
                     Console.WriteLine("Unhandled message Type");
                 }
-            
-                
+
+
             }
         }
         public static string GetLocalIPAddress()

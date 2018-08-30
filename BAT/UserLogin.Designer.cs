@@ -42,6 +42,7 @@
             this.textBox_userPassword = new System.Windows.Forms.TextBox();
             this.label_userPassword = new System.Windows.Forms.Label();
             this.pictureBox_loginImage = new System.Windows.Forms.PictureBox();
+            this.button_Get_LocalIP = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_loginImage)).BeginInit();
             this.SuspendLayout();
             // 
@@ -117,7 +118,7 @@
             this.button_connect.TabIndex = 8;
             this.button_connect.Text = "Connect / Login";
             this.button_connect.UseVisualStyleBackColor = true;
-            this.button_connect.Click += new System.EventHandler(this.button_connect_Click);
+            this.button_connect.Click += new System.EventHandler(this.Button_connect_Click);
             // 
             // textBox_userName
             // 
@@ -158,13 +159,24 @@
             this.pictureBox_loginImage.Size = new System.Drawing.Size(412, 295);
             this.pictureBox_loginImage.TabIndex = 13;
             this.pictureBox_loginImage.TabStop = false;
-            this.pictureBox_loginImage.Click += new System.EventHandler(this.pictureBox1_Click);
+            this.pictureBox_loginImage.Click += new System.EventHandler(this.PictureBox1_Click);
+            // 
+            // button_Get_LocalIP
+            // 
+            this.button_Get_LocalIP.Location = new System.Drawing.Point(615, 366);
+            this.button_Get_LocalIP.Name = "button_Get_LocalIP";
+            this.button_Get_LocalIP.Size = new System.Drawing.Size(173, 23);
+            this.button_Get_LocalIP.TabIndex = 14;
+            this.button_Get_LocalIP.Text = "Get Local IP";
+            this.button_Get_LocalIP.UseVisualStyleBackColor = true;
+            this.button_Get_LocalIP.Click += new System.EventHandler(this.button_Get_LocalIP_Click);
             // 
             // UserLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.button_Get_LocalIP);
             this.Controls.Add(this.pictureBox_loginImage);
             this.Controls.Add(this.label_userPassword);
             this.Controls.Add(this.textBox_userPassword);
@@ -203,5 +215,6 @@
         private System.Windows.Forms.TextBox textBox_userPassword;
         private System.Windows.Forms.Label label_userPassword;
         private System.Windows.Forms.PictureBox pictureBox_loginImage;
+        private System.Windows.Forms.Button button_Get_LocalIP;
     }
 }

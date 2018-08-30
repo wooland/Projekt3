@@ -12,11 +12,11 @@ namespace BATClient
     {
         static void Main(string[] args)
         {
-            Client myClient = new Client();
+            //Client myClient = new Client();
 
-            Thread clientThread = new Thread(myClient.Start);
-            clientThread.Start();
-            clientThread.Join();
+            //Thread clientThread = new Thread(myClient.Start);
+            //clientThread.Start();
+            //clientThread.Join();
         }
     }
 }

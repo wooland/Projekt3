@@ -72,6 +72,7 @@ namespace NetSock
                 Broadcast(client, "Client X has left the building...");
             }
         }
+
         public class ClientHandler
         {
             public TcpClient tcpclient;
@@ -107,7 +108,14 @@ namespace NetSock
 
         public class Client
         {
-            private TcpClient client;
+            public TcpClient client;
+
+            public string messType = "standard responsmessage";
+
+            public Client(TcpClient tcp)
+            {
+                client = tcp;
+            }
 
             #region How Start used to look like
             //public void Start(string UserIP)
@@ -125,29 +133,52 @@ namespace NetSock
             //}
             #endregion
 
-            public void Start(Object input)
-            {
-                Thread listenerThread = new Thread(Send);
-                listenerThread.Start();
+                  
 
-                Thread senderThread = new Thread(Listen);
-                senderThread.Start();
+            //public void Start()
+           
+                //{
+            //    BatProtocol testProtocol = new BatProtocol { Type = "Login", UserName = "Batman", Password = "BBBB", RecieverIP = "10.20.38.150", RecieverPort = 5000 };
+            //    client = new TcpClient(testProtocol.RecieverIP, testProtocol.RecieverPort);
 
-                senderThread.Join();
-                listenerThread.Join();
-            }
+            //    Thread batThread = new Thread(SendProtocol);
+            //    batThread.Start(testProtocol);
+
+            //    Thread listenerThread = new Thread(Send);
+            //    listenerThread.Start();
+
+            //    Thread senderThread = new Thread(Listen);
+            //    senderThread.Start();
+
+            //    senderThread.Join();
+            //    listenerThread.Join();
+            //    batThread.Join();
+            //}
 
             public void Listen()
             {
-                string message = "";
+                string message = "In case of no inputstring: This is the response";
 
                 try
                 {
                     while (true)
                     {
+                        //Här kommer svarsobjektet
                         NetworkStream n = client.GetStream();
                         message = new BinaryReader(n).ReadString();
-                        Console.WriteLine("Other: " + message);
+                        //dekoda message till objekt
+                        BatProtocol deSerializedMessage = JsonConvert.DeserializeObject<BatProtocol>(message);
+                        //Console.WriteLine("MessageType: " + deSerializedMessage.Type);
+                        
+                        this.messType = deSerializedMessage.Type;
+
+                        if (deSerializedMessage.Type == "Ok") {
+                            messType = "We're thoroughugh";
+                        } else if (deSerializedMessage.Type == "SM")
+                        {
+                            messType = deSerializedMessage.Message;
+                  
+                        }
                     }
                 }
                 catch (Exception ex)
@@ -182,7 +213,7 @@ namespace NetSock
             public void SendProtocol(Object input)
             {
                 BatProtocol p = (BatProtocol)input;
-                client = new TcpClient(p.RecieverIP, p.RecieverPort);
+                //client = new TcpClient(p.RecieverIP, p.RecieverPort);
 
                 NetworkStream n = client.GetStream();
                 BinaryWriter w = new BinaryWriter(n);

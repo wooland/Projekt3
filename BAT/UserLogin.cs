@@ -18,21 +18,28 @@ namespace BAT
 {
     public partial class UserLogin : Form
     {
-        string userName;
-        string user_PassWord;
-        string user_IP;
+        string userName ="No username set";
+        string user_PassWord ="No Password set";
+        string user_IP ;
         int user_Port;
         string reciever_IP;
         int reciever_port;
-        public BATContext context { get; set; }
+        public BATContext Context { get; set; }
         public UserLogin(BATContext context)
         {
             InitializeComponent();
-            this.context = context;
+            this.Context = context;
+            TextBox_userIP.Text = "10.20.38.150";
+            textBox_userName.Text = "BatMan";
+            textBox_userPassword.Text = "BBBB";
+            textBox_receiverPort.Text = "5000";
+            TextBox_receiverIP.Text = "10.20.38.150";
+            TextBox_userPort.Text = "5000";
+
             //pictureBox_loginImage.Image= Image.FromFile("../media/technology-c-sharp.png");
         }
 
-        private void button_connect_Click(object sender, EventArgs e)
+        private void Button_connect_Click(object sender, EventArgs e)
         {
             if (TextBox_receiverIP.Text == "" || textBox_receiverPort.Text == "")
             {
@@ -56,19 +63,52 @@ namespace BAT
                 reciever_IP = TextBox_receiverIP.Text;
                 reciever_port = Convert.ToInt32(textBox_receiverPort.Text);
 
-                Client client = new Client();
+                 
+                
                 BatProtocol p = new BatProtocol()
                 { Type = "Login", Version = 1, UserName = userName, Password = user_PassWord,
                     RecieverIP = reciever_IP, RecieverPort = reciever_port, UserIP = user_IP, UserPort = user_Port };
 
-                Thread batThread = new Thread(client.Start);
+
+                TcpClient tcpclient = new TcpClient(p.RecieverIP, p.RecieverPort);
+                Client client = new Client(tcpclient);
+
+                Thread batListener = new Thread(client.Listen);
+                batListener.Start();
+
+                Thread batThread = new Thread(client.SendProtocol);
                 batThread.Start(p);
+
+                
+
+                var x = new Chatbox(Context, client);
+                x.ShowDialog();
+
                 batThread.Join();
             }
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
+        private void PictureBox1_Click(object sender, EventArgs e)
         {
+        }
+
+        private void button_Get_LocalIP_Click(object sender, EventArgs e)
+        {
+            TextBox_userIP.Text = GetLocalIPAddress();
+            TextBox_receiverIP.Text = GetLocalIPAddress();
+        }
+
+        public static string GetLocalIPAddress()
+        {
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (var ip in host.AddressList)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    return ip.ToString();
+                }
+            }
+            throw new Exception("No network adapters with an IPv4 address in the system!");
         }
     }
 }
