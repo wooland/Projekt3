@@ -218,11 +218,9 @@ namespace NetSock
                 NetworkStream n = client.GetStream();
                 BinaryWriter w = new BinaryWriter(n);
 
-                string protocol = JsonConvert.SerializeObject(p);
+                string protocol = JsonConvert.SerializeObject(input);
                 w.Write(protocol);
             }
         }
-
-
     }
 }
