@@ -60,7 +60,7 @@ namespace BAT
             
             client.SendProtocol(bob);
 
-            ShowChatBox.Items.Add($"{timeStamp}: " + client.messType);
+            //ShowChatBox.Items.Add($"{timeStamp}: " + client.messType);
         }
 
         private void PictureBox_Click(object sender, EventArgs e)
