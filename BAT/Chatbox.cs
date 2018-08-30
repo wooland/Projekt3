@@ -57,8 +57,9 @@ namespace BAT
         public void AddMessageButton_Click(object sender, EventArgs e)
         {
             BatProtocol bob = new BatProtocol {Type = "PM", Message = WriteBox.Text, RecieverIP = "10.20.38.150", RecieverPort = 5000 };
-            object temp = JsonConvert.SerializeObject(bob);
+            
             client.SendProtocol(bob);
+
             ShowChatBox.Items.Add($"{timeStamp}: " + client.messType);
         }
 

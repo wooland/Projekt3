@@ -29,11 +29,11 @@ namespace BAT
         {
             InitializeComponent();
             this.Context = context;
-            TextBox_userIP.Text = "10.20.38.150";
+            //TextBox_userIP.Text = "10.20.38.150";
             textBox_userName.Text = "BatMan";
             textBox_userPassword.Text = "BBBB";
             textBox_receiverPort.Text = "5000";
-            TextBox_receiverIP.Text = "10.20.38.150";
+            //TextBox_receiverIP.Text = "10.20.38.150";
             TextBox_userPort.Text = "5000";
 
             //pictureBox_loginImage.Image= Image.FromFile("../media/technology-c-sharp.png");

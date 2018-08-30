@@ -116,7 +116,7 @@ namespace BATServer
                         NetworkStream n = tcpclient.GetStream();
                         message = new BinaryReader(n).ReadString();
                         ReadMessage(message);
-                        myServer.Broadcast(this, message);
+                        //myServer.Broadcast(this, message);
                         //Console.WriteLine(message);
                     }
 
@@ -157,8 +157,7 @@ namespace BATServer
                             new BinaryWriter(n).Write(JsonConvert.SerializeObject(ok));
                             
                         }
-                    }
-                    
+                    }                   
                 }
 
                 else if(deSerializedMessage.Type == "PM")
@@ -169,7 +168,6 @@ namespace BATServer
 
                     deSerializedMessage.Type = "SM";
                     new BinaryWriter(n).Write(JsonConvert.SerializeObject(deSerializedMessage));
-
                 }
 
                 else
