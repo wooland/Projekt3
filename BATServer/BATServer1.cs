@@ -167,7 +167,9 @@ namespace BATServer
                     NetworkStream n = tcpclient.GetStream();
 
                     deSerializedMessage.Type = "SM";
-                    new BinaryWriter(n).Write(JsonConvert.SerializeObject(deSerializedMessage));
+                    
+                    //new BinaryWriter(n).Write(JsonConvert.SerializeObject(deSerializedMessage));
+                    myServer.Broadcast(this, JsonConvert.SerializeObject(deSerializedMessage));
                 }
 
                 else
