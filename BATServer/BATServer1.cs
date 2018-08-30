@@ -116,7 +116,7 @@ namespace BATServer
                         NetworkStream n = tcpclient.GetStream();
                         message = new BinaryReader(n).ReadString();
                         ReadMessage(message);
-                        //myServer.Broadcast(this, message);
+                        myServer.Broadcast(this, message);
                         //Console.WriteLine(message);
                     }
 
