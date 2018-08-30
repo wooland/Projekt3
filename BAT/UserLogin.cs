@@ -18,9 +18,9 @@ namespace BAT
 {
     public partial class UserLogin : Form
     {
-        string userName;
-        string user_PassWord;
-        string user_IP;
+        string userName ="No username set";
+        string user_PassWord ="No Password set";
+        string user_IP ;
         int user_Port;
         string reciever_IP;
         int reciever_port;

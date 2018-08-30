@@ -110,7 +110,7 @@ namespace NetSock
         {
             public TcpClient client;
 
-            public string messType = "*";
+            public string messType = "standard responsmessage";
 
             public Client(TcpClient tcp)
             {
@@ -157,7 +157,7 @@ namespace NetSock
 
             public void Listen()
             {
-                string message = "";
+                string message = "In case of no inputstring: This is the response";
 
                 try
                 {
