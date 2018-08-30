@@ -29,6 +29,13 @@ namespace BAT
         {
             InitializeComponent();
             this.Context = context;
+            TextBox_userIP.Text = "10.20.38.150";
+            textBox_userName.Text = "BatMan";
+            textBox_userPassword.Text = "BBBB";
+            textBox_receiverPort.Text = "5000";
+            TextBox_receiverIP.Text = "10.20.38.150";
+            TextBox_userPort.Text = "5000";
+
             //pictureBox_loginImage.Image= Image.FromFile("../media/technology-c-sharp.png");
         }
 
@@ -56,14 +63,27 @@ namespace BAT
                 reciever_IP = TextBox_receiverIP.Text;
                 reciever_port = Convert.ToInt32(textBox_receiverPort.Text);
 
-                Client client = new Client();
+                 
+                
                 BatProtocol p = new BatProtocol()
                 { Type = "Login", Version = 1, UserName = userName, Password = user_PassWord,
                     RecieverIP = reciever_IP, RecieverPort = reciever_port, UserIP = user_IP, UserPort = user_Port };
 
-                Object protocol = p;
+
+                TcpClient tcpclient = new TcpClient(p.RecieverIP, p.RecieverPort);
+                Client client = new Client(tcpclient);
+
+                Thread batListener = new Thread(client.Listen);
+                batListener.Start();
+
                 Thread batThread = new Thread(client.SendProtocol);
-                batThread.Start(protocol);
+                batThread.Start(p);
+
+                
+
+                var x = new Chatbox(Context, client);
+                x.ShowDialog();
+
                 batThread.Join();
             }
         }
