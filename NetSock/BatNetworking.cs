@@ -125,14 +125,8 @@ namespace NetSock
             //}
             #endregion
 
-            public void Start()
+            public void Start(Object input)
             {
-                BatProtocol testProtocol = new BatProtocol { Type = "Login", UserName = "Batman", Password = "BBBB", RecieverIP = "10.20.38.150", RecieverPort = 5000 };
-                client = new TcpClient(testProtocol.RecieverIP, testProtocol.RecieverPort);
-
-                Thread batThread = new Thread(SendProtocol);
-                batThread.Start(testProtocol);
-
                 Thread listenerThread = new Thread(Send);
                 listenerThread.Start();
 
@@ -141,7 +135,6 @@ namespace NetSock
 
                 senderThread.Join();
                 listenerThread.Join();
-                batThread.Join();
             }
 
             public void Listen()
@@ -194,11 +187,9 @@ namespace NetSock
                 NetworkStream n = client.GetStream();
                 BinaryWriter w = new BinaryWriter(n);
 
-                string protocol = JsonConvert.SerializeObject(p);
+                string protocol = JsonConvert.SerializeObject(input);
                 w.Write(protocol);
             }
         }
-
-
     }
 }
