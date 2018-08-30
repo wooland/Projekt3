@@ -69,23 +69,53 @@ namespace BATServer
 
             public void Broadcast(ClientHandler client, string message)
             {
-                foreach (ClientHandler tmpClient in clients)
+                List<ClientHandler> notConnectedclients = new List<ClientHandler>();
+
+                lock (clients)
                 {
-                    if (tmpClient != client)
+
+
+                    foreach (ClientHandler tmpClient in clients)
                     {
-                        NetworkStream n = tmpClient.tcpclient.GetStream();
-                        BinaryWriter w = new BinaryWriter(n);
-                        w.Write(message);
-                        w.Flush();
+
+                        try
+                        {
+
+
+                            //if (tmpClient != client)
+                            //{
+                                NetworkStream n = tmpClient.tcpclient.GetStream();
+                                BinaryWriter w = new BinaryWriter(n);
+                                w.Write(message);
+                                w.Flush();
+                            //}
+                            //else if (clients.Count() == 1)
+                            //{
+                            //    NetworkStream n = tmpClient.tcpclient.GetStream();
+                            //    BinaryWriter w = new BinaryWriter(n);
+                            //    w.Write("Sorry, you are alone...");
+                            //    w.Flush();
+                            //}
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("Client not connected, Will be removed.");
+                            Console.WriteLine(ex.Message);
+                            notConnectedclients.Add(tmpClient);
+                        }
                     }
-                    else if (clients.Count() == 1)
+                    if (notConnectedclients.Count > 0)
                     {
-                        NetworkStream n = tmpClient.tcpclient.GetStream();
-                        BinaryWriter w = new BinaryWriter(n);
-                        w.Write("Sorry, you are alone...");
-                        w.Flush();
+                        foreach (var tmpClient in notConnectedclients)
+                        {
+                            clients.Remove(tmpClient);
+                            Console.WriteLine("Removed faulty client");
+                        }
                     }
                 }
+                Console.WriteLine($"{clients.Count} Connected clients");
+
+
             }
 
             public void DisconnectClient(ClientHandler client)
@@ -105,6 +135,8 @@ namespace BATServer
                 tcpclient = c;
                 this.myServer = server;
             }
+
+
 
             public void Run()
             {
@@ -133,41 +165,41 @@ namespace BATServer
             {
 
                 BatProtocol deSerializedMessage = JsonConvert.DeserializeObject<BatProtocol>(message);
-                
+
                 //Testar om message är av typen login
-                if(deSerializedMessage.Type == "Login")
+                if (deSerializedMessage.Type == "Login")
                 {
                     Console.WriteLine("logging in...");
                     //kollar om username finns i databasen
-                    if(context.BatUsers.ToList()
+                    if (context.BatUsers.ToList()
                         .Exists(u => u.Name == deSerializedMessage.UserName))
                     {
                         Console.WriteLine(deSerializedMessage.UserName + "Exists");
-                        
+
                         //Kollar om lösenord matchar med det som är lagt in i databasen under samma login.
-                        if(context.BatUsers.ToList()
+                        if (context.BatUsers.ToList()
                             .Find(u => u.Name == deSerializedMessage.UserName)
                             .Password == deSerializedMessage.Password)
                         {
                             Console.WriteLine("Login Successful");
                             //Skickar message i retur
                             NetworkStream n = tcpclient.GetStream();
-                            BatProtocol ok = new BatProtocol { Type = "Ok"};
-                            
+                            BatProtocol ok = new BatProtocol { Type = "Ok" };
+
                             new BinaryWriter(n).Write(JsonConvert.SerializeObject(ok));
-                            
+
                         }
-                    }                   
+                    }
                 }
 
-                else if(deSerializedMessage.Type == "PM")
+                else if (deSerializedMessage.Type == "PM")
                 {
-                    Console.WriteLine("PM");
+                    Console.WriteLine("PM" + deSerializedMessage.Message);
 
                     NetworkStream n = tcpclient.GetStream();
 
                     deSerializedMessage.Type = "SM";
-                    
+
                     //new BinaryWriter(n).Write(JsonConvert.SerializeObject(deSerializedMessage));
                     myServer.Broadcast(this, JsonConvert.SerializeObject(deSerializedMessage));
                 }

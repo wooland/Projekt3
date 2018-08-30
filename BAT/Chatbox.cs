@@ -156,7 +156,7 @@ namespace BAT
             NetworkStream n = client.GetStream();
             BinaryWriter w = new BinaryWriter(n);
 
-            string protocol = JsonConvert.SerializeObject(input);
+            string protocol = JsonConvert.SerializeObject(p);
             w.Write(protocol);
         }
     }
