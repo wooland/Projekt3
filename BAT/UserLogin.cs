@@ -74,9 +74,7 @@ namespace BAT
                     RecieverPort = reciever_port,
                 };
 
-
                 client = new TcpClient(p.RecieverIP, p.RecieverPort);
-                //Client client = new Client(tcpclient);
 
                 Thread batListener = new Thread(Listen);
                 batListener.Start();
@@ -132,11 +130,9 @@ namespace BAT
 
                     if (deSerializedMessage.Type == "Ok")
                     {
-
-                        var x = new Chatbox(Context, client);
+                        
+                        var x = new Chatbox(Context, client, userName);
                         x.ShowDialog();
-                        //break;
-
                     }
                     else if (deSerializedMessage.Type == "SM")
                     {
