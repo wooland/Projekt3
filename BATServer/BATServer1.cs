@@ -165,7 +165,8 @@ namespace BATServer
             }
 
             private void ReadMessage(string message)
-            {
+  {
+                bool doubleLogin = false;
 
                 BatProtocol deSerializedMessage = JsonConvert.DeserializeObject<BatProtocol>(message);
 
@@ -173,8 +174,22 @@ namespace BATServer
                 if (deSerializedMessage.Type == "Login")
                 {
                     Console.WriteLine("logging in...");
+                    
+                    //Kolla om redan inloggad
+                    if (NameList != null && NameList.Contains(deSerializedMessage.UserName))
+                    {
+                        Console.WriteLine(deSerializedMessage.UserName + "Redan inloggad");
+                        //Skickar felmessage i retur
+                        doubleLogin = true;
+                        NetworkStream n = tcpclient.GetStream();
+                        BatProtocol ok = new BatProtocol { Type = "DoubleLogin" };
+                      
+                        new BinaryWriter(n).Write(JsonConvert.SerializeObject(ok));
+                        
+                    }
+
                     //kollar om username finns i databasen
-                    if (Context.BatUsers.ToList()
+                    else if (Context.BatUsers.ToList()
                         .Exists(u => u.Name == deSerializedMessage.UserName))
                     {
                         if(NameList == null)
@@ -215,7 +230,7 @@ namespace BATServer
                         
                     }
                     //Kollar om lösenord matchar med det som är lagt in i databasen under samma login.
-                    if (Context.BatUsers.ToList()
+                    if (!doubleLogin && Context.BatUsers.ToList()
                         .Find(u => u.Name == deSerializedMessage.UserName)
                         .Password == deSerializedMessage.Password)
                     {
