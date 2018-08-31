@@ -146,7 +146,7 @@ namespace BATServer
                 try
                 {
                     string message = "";
-                    while (!message.Equals("quit"))
+                    while (true)
                     {
                         NetworkStream n = tcpclient.GetStream();
                         message = new BinaryReader(n).ReadString();
