@@ -107,7 +107,7 @@ namespace BAT
 
                     if (deSerializedMessage.Type == "Ok")
                     {
-                        messType = "We're thoroughugh";
+                        messType = "We're through";
                     }
                     else if (deSerializedMessage.Type == "SM")
                     {

@@ -20,10 +20,8 @@ namespace BAT
 {
     public partial class UserLogin : Form
     {
-        string userName ="No username set";
-        string user_PassWord ="No Password set";
-        string user_IP ;
-        int user_Port;
+        string userName = "No username set";
+        string user_PassWord = "No Password set";
         string reciever_IP;
         int reciever_port;
 
@@ -40,7 +38,9 @@ namespace BAT
             textBox_userName.Text = "BatMan";
             textBox_userPassword.Text = "BBBB";
             textBox_receiverPort.Text = "5000";
-            TextBox_userPort.Text = "5000";
+
+
+
             //pictureBox_loginImage.Image= Image.FromFile("../media/technology-c-sharp.png");
         }
 
@@ -50,10 +50,6 @@ namespace BAT
             {
                 MessageBox.Show("Please enter the proper IP/Port information into the receiver fields");
             }
-            if (TextBox_userIP.Text == "" || TextBox_userPort.Text == "")
-            {
-                MessageBox.Show("Please enter the proper IP/Port information into the User fields");
-            }
             if (textBox_userName.Text == "" || textBox_userPassword.Text == "")
             {
                 MessageBox.Show("Please enter proper login information");
@@ -62,17 +58,21 @@ namespace BAT
             {
                 userName = textBox_userName.Text;
                 user_PassWord = textBox_userPassword.Text;
-                user_IP = TextBox_userIP.Text;
-                user_Port = Convert.ToInt32(TextBox_userPort.Text);
 
                 reciever_IP = TextBox_receiverIP.Text;
                 reciever_port = Convert.ToInt32(textBox_receiverPort.Text);
 
-                 
-                
+
+
                 BatProtocol p = new BatProtocol()
-                { Type = "Login", Version = 1, UserName = userName, Password = user_PassWord,
-                    RecieverIP = reciever_IP, RecieverPort = reciever_port, UserIP = user_IP, UserPort = user_Port };
+                {
+                    Type = "Login",
+                    Version = 1,
+                    UserName = userName,
+                    Password = user_PassWord,
+                    RecieverIP = reciever_IP,
+                    RecieverPort = reciever_port,
+                };
 
                 client = new TcpClient(p.RecieverIP, p.RecieverPort);
 
@@ -91,7 +91,6 @@ namespace BAT
 
         private void button_Get_LocalIP_Click(object sender, EventArgs e)
         {
-            TextBox_userIP.Text = GetLocalIPAddress();
             TextBox_receiverIP.Text = GetLocalIPAddress();
         }
 
@@ -107,7 +106,7 @@ namespace BAT
             }
             throw new Exception("No IP");
         }
-        
+
         public void Listen()
         {
             string message = "In case of no inputstring: This is the response";
@@ -182,4 +181,4 @@ namespace BAT
 }
 
 
-    
+
