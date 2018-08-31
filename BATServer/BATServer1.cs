@@ -14,6 +14,9 @@ namespace BATServer
 {
     class BATServer1
     {
+
+        public static List<string> NameList = new List<String> { "Chatbot1"};
+
         public static BATContext context { get; set; }
         //public BATServer1(BATContext context)
         //{
@@ -184,7 +187,10 @@ namespace BATServer
                             Console.WriteLine("Login Successful");
                             //Skickar message i retur
                             NetworkStream n = tcpclient.GetStream();
-                            BatProtocol ok = new BatProtocol { Type = "Ok" };
+                            //Lägg till eget namn i listan och skicka med listan efter det
+                            NameList.Add(deSerializedMessage.UserName);
+
+                            BatProtocol ok = new BatProtocol { Type = "Ok", Userlist = NameList};
 
                             new BinaryWriter(n).Write(JsonConvert.SerializeObject(ok));
 
@@ -199,6 +205,7 @@ namespace BATServer
                     NetworkStream n = tcpclient.GetStream();
 
                     deSerializedMessage.Type = "SM";
+                    deSerializedMessage.Userlist = NameList;
 
                     //new BinaryWriter(n).Write(JsonConvert.SerializeObject(deSerializedMessage));
                     myServer.Broadcast(this, JsonConvert.SerializeObject(deSerializedMessage));
