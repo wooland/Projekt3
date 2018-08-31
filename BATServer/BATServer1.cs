@@ -17,7 +17,7 @@ namespace BATServer
 
         public static List<string> NameList = new List<String> { "Chatbot1"};
 
-        public static BATContext context { get; set; }
+        public static BATContext Context { get; set; }
         //public BATServer1(BATContext context)
         //{
         //    this.context = context;

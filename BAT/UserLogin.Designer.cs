@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UserLogin));
             this.TextBox_receiverIP = new System.Windows.Forms.TextBox();
             this.Label_receiverIP = new System.Windows.Forms.Label();
             this.textBox_receiverPort = new System.Windows.Forms.TextBox();
@@ -127,7 +128,8 @@
             // 
             // pictureBox_loginImage
             // 
-            this.pictureBox_loginImage.ImageLocation = "C:\\Projects\\BAT\\BAT\\Resources\\batpicture.png";
+            this.pictureBox_loginImage.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox_loginImage.Image")));
+            this.pictureBox_loginImage.ImageLocation = "";
             this.pictureBox_loginImage.Location = new System.Drawing.Point(426, 33);
             this.pictureBox_loginImage.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox_loginImage.Name = "pictureBox_loginImage";
