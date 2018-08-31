@@ -26,6 +26,7 @@ namespace BAT
 
         public BATContext Context { get; set; }
         public string timeStamp;
+        public string whichUser;
 
         public Chatbox()
         {
@@ -44,12 +45,17 @@ namespace BAT
                 Listbox_of_Users.Items.Add(item.Name);
             }
         }
-        public Chatbox(BATContext context, TcpClient client) : this()
+        public Chatbox(BATContext context, TcpClient client, string user) : this()
         {
-
+            this.whichUser = user;
             this.Context = context;
             this.client = client;
 
+        }
+        public Chatbox(BATContext context, TcpClient client) : this()
+        {
+            this.Context = context;
+            this.client = client;
         }
 
 
@@ -72,7 +78,7 @@ namespace BAT
 
         public void AddMessageButton_Click(object sender, EventArgs e)
         {
-            BatProtocol bob = new BatProtocol {Type = "PM", Message = WriteBox.Text };
+            BatProtocol bob = new BatProtocol {Type = "PM", Message = WriteBox.Text, UserName=whichUser};
             SendProtocol(bob);
         }
 
@@ -106,7 +112,7 @@ namespace BAT
                     else if (deSerializedMessage.Type == "SM")
                     {
                         timeStamp = DateTime.Now.ToShortTimeString();
-                        ShowChatBox.Items.Add($"{deSerializedMessage.UserName}:  ({timeStamp})  { deSerializedMessage.Message.ToString()}");
+                        ShowChatBox.Items.Add($"({timeStamp}) {deSerializedMessage.UserName}:{ deSerializedMessage.Message.ToString()}");
 
                     }
                 }
