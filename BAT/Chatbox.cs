@@ -30,10 +30,7 @@ namespace BAT
 
         public Chatbox()
         {
-            InitializeComponent();
-            CheckForIllegalCrossThreadCalls = false;
-            Thread batListener = new Thread(Listen);
-            batListener.Start();
+            
         }
 
         public Chatbox(BATContext context) : this()
@@ -45,12 +42,20 @@ namespace BAT
                 Listbox_of_Users.Items.Add(item.Name);
             }
         }
-        public Chatbox(BATContext context, TcpClient client, string user, List<string> daList) : this()
+        public Chatbox(BATContext context, TcpClient client, string user, List<string> daList) 
         {
+            InitializeComponent();
+            CheckForIllegalCrossThreadCalls = false;
+
             Listbox_of_Users.DataSource = daList;
             this.whichUser = user;
             this.Context = context;
             this.client = client;
+
+            
+            Thread batListener = new Thread(Listen);
+            batListener.Start();
+
 
         }
         public Chatbox(BATContext context, TcpClient client) : this()
@@ -108,14 +113,15 @@ namespace BAT
 
                     if (deSerializedMessage.Type == "Ok")
                     {
-                        
-                        Listbox_of_Users.DataSource = deSerializedMessage.Userlist;
+                        if(deSerializedMessage.Userlist != null)
+                            Listbox_of_Users.DataSource = deSerializedMessage.Userlist;
                     }
                     else if (deSerializedMessage.Type == "SM")
                     {
                         timeStamp = DateTime.Now.ToShortTimeString();
                         ShowChatBox.Items.Add($"({timeStamp}) {deSerializedMessage.UserName}:{ deSerializedMessage.Message.ToString()}");
-                        Listbox_of_Users.DataSource = deSerializedMessage.Userlist;
+                        if (deSerializedMessage.Userlist != null)
+                            Listbox_of_Users.DataSource = deSerializedMessage.Userlist;
                     }
                 }
             }

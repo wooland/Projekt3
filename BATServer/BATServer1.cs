@@ -15,9 +15,9 @@ namespace BATServer
     class BATServer1
     {
 
-        public static List<string> NameList = new List<String> { "Chatbot1"};
+        public static List<string> NameList;
 
-        public static BATContext context { get; set; }
+        public static BATContext Context { get; set; }
         //public BATServer1(BATContext context)
         //{
         //    this.context = context;
@@ -177,6 +177,15 @@ namespace BATServer
                     if (Context.BatUsers.ToList()
                         .Exists(u => u.Name == deSerializedMessage.UserName))
                     {
+                        if(NameList == null)
+                        {
+                            NameList = new List<string> { deSerializedMessage.UserName };
+                        }
+                        else
+                        {
+                            NameList.Add(deSerializedMessage.UserName);
+                        }
+                        
                         Console.WriteLine(deSerializedMessage.UserName + " User Exists");
                     }
                     else if (!(Context.BatUsers.ToList().Exists(s => s.Name.Equals(deSerializedMessage.UserName))))
@@ -188,6 +197,15 @@ namespace BATServer
                             Context.BatUsers.Add(newUser);
                             Context.SaveChanges();
                             Console.WriteLine("Creation succesful!");
+
+                            if (NameList == null)
+                            {
+                                NameList = new List<string> { deSerializedMessage.UserName };
+                            }
+                            else
+                            {
+                                NameList.Add(deSerializedMessage.UserName);
+                            }
                         }
                         catch (Exception ex)
                         {
@@ -205,6 +223,12 @@ namespace BATServer
                         //Skickar message i retur
                         NetworkStream n = tcpclient.GetStream();
                         BatProtocol ok = new BatProtocol { Type = "Ok" };
+                        if (NameList != null)
+                        {
+                            ok.Userlist = NameList; 
+                        } 
+                       
+                        
 
                         new BinaryWriter(n).Write(JsonConvert.SerializeObject(ok));
 
@@ -218,7 +242,11 @@ namespace BATServer
                     NetworkStream n = tcpclient.GetStream();
 
                     deSerializedMessage.Type = "SM";
-                    deSerializedMessage.Userlist = NameList;
+                    if (NameList != null)
+                    {
+                        deSerializedMessage.Userlist = NameList;
+                    }
+                        
 
                     //new BinaryWriter(n).Write(JsonConvert.SerializeObject(deSerializedMessage));
                     myServer.Broadcast(this, JsonConvert.SerializeObject(deSerializedMessage));

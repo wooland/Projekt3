@@ -121,8 +121,16 @@ namespace BAT
 
                     if (deSerializedMessage.Type == "Ok")
                     {
-                        
-                        var x = new Chatbox(Context, client, userName, deSerializedMessage.Userlist);
+                        List<String> listPeople;
+                        if(deSerializedMessage.Userlist == null)
+                        {
+                            listPeople = new List<string>();
+                        }
+                        else
+                        {
+                            listPeople = deSerializedMessage.Userlist;
+                        }
+                        var x = new Chatbox(Context, client, userName, listPeople);
                         x.ShowDialog();
                     }
                     else if (deSerializedMessage.Type == "SM")
