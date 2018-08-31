@@ -14,7 +14,7 @@ namespace BATServer
 {
     class BATServer1
     {
-        public static BATContext context { get; set; }
+        public static BATContext Context { get; set; }
         //public BATServer1(BATContext context)
         //{
         //    this.context = context;
@@ -23,7 +23,7 @@ namespace BATServer
         static void Main(string[] args)
         {
             Console.WriteLine("IP: " + GetLocalIPAddress());
-            context = new BATContext();
+            Context = new BATContext();
             Server myServer = new Server();
             Thread serverThread = new Thread(myServer.Run);
             serverThread.Start();
@@ -84,10 +84,10 @@ namespace BATServer
 
                             //if (tmpClient != client)
                             //{
-                                NetworkStream n = tmpClient.tcpclient.GetStream();
-                                BinaryWriter w = new BinaryWriter(n);
-                                w.Write(message);
-                                w.Flush();
+                            NetworkStream n = tmpClient.tcpclient.GetStream();
+                            BinaryWriter w = new BinaryWriter(n);
+                            w.Write(message);
+                            w.Flush();
                             //}
                             //else if (clients.Count() == 1)
                             //{
@@ -171,24 +171,40 @@ namespace BATServer
                 {
                     Console.WriteLine("logging in...");
                     //kollar om username finns i databasen
-                    if (context.BatUsers.ToList()
+                    if (Context.BatUsers.ToList()
                         .Exists(u => u.Name == deSerializedMessage.UserName))
                     {
-                        Console.WriteLine(deSerializedMessage.UserName + "Exists");
-
-                        //Kollar om lösenord matchar med det som är lagt in i databasen under samma login.
-                        if (context.BatUsers.ToList()
-                            .Find(u => u.Name == deSerializedMessage.UserName)
-                            .Password == deSerializedMessage.Password)
+                        Console.WriteLine(deSerializedMessage.UserName + " User Exists");
+                    }
+                    else if (!(Context.BatUsers.ToList().Exists(s => s.Name.Equals(deSerializedMessage.UserName))))
+                    {
+                        Console.WriteLine(deSerializedMessage.UserName + " does not exists. Creating a new user...");
+                        try
                         {
-                            Console.WriteLine("Login Successful");
-                            //Skickar message i retur
-                            NetworkStream n = tcpclient.GetStream();
-                            BatProtocol ok = new BatProtocol { Type = "Ok" };
-
-                            new BinaryWriter(n).Write(JsonConvert.SerializeObject(ok));
-
+                            BatUsers newUser = new BatUsers { Name = deSerializedMessage.UserName, Password = deSerializedMessage.Password };
+                            Context.BatUsers.Add(newUser);
+                            Context.SaveChanges();
+                            Console.WriteLine("Creation succesful!");
                         }
+                        catch (Exception ex)
+                        {
+
+                            throw ex;
+                        }
+                        
+                    }
+                    //Kollar om lösenord matchar med det som är lagt in i databasen under samma login.
+                    if (Context.BatUsers.ToList()
+                        .Find(u => u.Name == deSerializedMessage.UserName)
+                        .Password == deSerializedMessage.Password)
+                    {
+                        Console.WriteLine("Login Successful");
+                        //Skickar message i retur
+                        NetworkStream n = tcpclient.GetStream();
+                        BatProtocol ok = new BatProtocol { Type = "Ok" };
+
+                        new BinaryWriter(n).Write(JsonConvert.SerializeObject(ok));
+
                     }
                 }
 
