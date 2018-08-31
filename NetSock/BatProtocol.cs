@@ -19,10 +19,6 @@ namespace NetSock
 
         public string Password { get; set; }
 
-        public string UserIP { get; set; }
-
-        public int UserPort { get; set; }
-
         public string RecieverIP { get; set; }
 
         public int RecieverPort { get; set; }
