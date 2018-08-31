@@ -19,7 +19,7 @@ namespace BAT
 {
     public partial class Chatbox : Form
     {
-
+        List<BatUsers> listOfUser;
         public TcpClient client;
 
         public string messType = "standard responsmessage";
@@ -38,14 +38,11 @@ namespace BAT
         public Chatbox(BATContext context) : this()
         {
             this.Context = context;
-            var listOfUser = context.BatUsers.ToList();
+            listOfUser = context.BatUsers.ToList();
             foreach (var item in listOfUser)
             {
                 Listbox_of_Users.Items.Add(item.Name);
             }
-
-            //ShowChatBox.Text = client.messType;
-
         }
         public Chatbox(BATContext context, TcpClient client) : this()
         {
@@ -71,17 +68,12 @@ namespace BAT
 
         private void ListView1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //NameLabel.Items.Add(UserName.Text);
         }
 
         public void AddMessageButton_Click(object sender, EventArgs e)
         {
             BatProtocol bob = new BatProtocol {Type = "PM", Message = WriteBox.Text };
             SendProtocol(bob);
-
-            
-
-            //ShowChatBox.Items.Add($"{timeStamp}: " + client.messType);
         }
 
         private void PictureBox_Click(object sender, EventArgs e)
@@ -114,7 +106,7 @@ namespace BAT
                     else if (deSerializedMessage.Type == "SM")
                     {
                         timeStamp = DateTime.Now.ToShortTimeString();
-                        ShowChatBox.Items.Add($"{timeStamp}: " + deSerializedMessage.Message.ToString());
+                        ShowChatBox.Items.Add($"{deSerializedMessage.UserName}:  ({timeStamp})  { deSerializedMessage.Message.ToString()}");
 
                     }
                 }

@@ -194,7 +194,7 @@ namespace BATServer
 
                 else if (deSerializedMessage.Type == "PM")
                 {
-                    Console.WriteLine("PM" + deSerializedMessage.Message);
+                    Console.WriteLine(deSerializedMessage.UserName + " PM: " + deSerializedMessage.Message);
 
                     NetworkStream n = tcpclient.GetStream();
 
