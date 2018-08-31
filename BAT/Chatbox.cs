@@ -86,6 +86,7 @@ namespace BAT
         {
             BatProtocol bob = new BatProtocol {Type = "PM", Message = WriteBox.Text, UserName=whichUser};
             SendProtocol(bob);
+            WriteBox.Text = null;
         }
 
         private void PictureBox_Click(object sender, EventArgs e)
