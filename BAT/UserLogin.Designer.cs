@@ -127,10 +127,12 @@
             // 
             // pictureBox_loginImage
             // 
+            this.pictureBox_loginImage.ImageLocation = "C:\\Projects\\BAT\\BAT\\Resources\\batpicture.png";
             this.pictureBox_loginImage.Location = new System.Drawing.Point(426, 33);
             this.pictureBox_loginImage.Margin = new System.Windows.Forms.Padding(4);
             this.pictureBox_loginImage.Name = "pictureBox_loginImage";
             this.pictureBox_loginImage.Size = new System.Drawing.Size(517, 363);
+            this.pictureBox_loginImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox_loginImage.TabIndex = 13;
             this.pictureBox_loginImage.TabStop = false;
             this.pictureBox_loginImage.Click += new System.EventHandler(this.PictureBox1_Click);

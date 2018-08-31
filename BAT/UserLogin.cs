@@ -38,10 +38,6 @@ namespace BAT
             textBox_userName.Text = "BatMan";
             textBox_userPassword.Text = "BBBB";
             textBox_receiverPort.Text = "5000";
-
-
-
-            //pictureBox_loginImage.Image= Image.FromFile("../media/technology-c-sharp.png");
         }
 
         private void Button_connect_Click(object sender, EventArgs e)
