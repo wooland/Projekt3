@@ -20,8 +20,8 @@ namespace BAT
 {
     public partial class UserLogin : Form
     {
-        string userName = "No username set";
-        string user_PassWord = "No Password set";
+        string userName;
+        string user_PassWord;
         string reciever_IP;
         int reciever_port;
 
@@ -59,7 +59,6 @@ namespace BAT
                 reciever_port = Convert.ToInt32(textBox_receiverPort.Text);
 
 
-
                 BatProtocol p = new BatProtocol()
                 {
                     Type = "Login",
@@ -77,10 +76,6 @@ namespace BAT
 
                 Thread batThread = new Thread(SendProtocol);
                 batThread.Start(p);
-
-
-
-
                 batThread.Join();
             }
         }
@@ -89,7 +84,7 @@ namespace BAT
         {
         }
 
-        private void button_Get_LocalIP_Click(object sender, EventArgs e)
+        private void Button_Get_LocalIP_Click(object sender, EventArgs e)
         {
             TextBox_receiverIP.Text = GetLocalIPAddress();
         }
@@ -127,7 +122,7 @@ namespace BAT
                     if (deSerializedMessage.Type == "Ok")
                     {
                         
-                        var x = new Chatbox(Context, client, userName);
+                        var x = new Chatbox(Context, client, userName, deSerializedMessage.Userlist);
                         x.ShowDialog();
                     }
                     else if (deSerializedMessage.Type == "SM")

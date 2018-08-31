@@ -146,7 +146,7 @@
             this.button_Get_LocalIP.TabIndex = 14;
             this.button_Get_LocalIP.Text = "Get Local IP";
             this.button_Get_LocalIP.UseVisualStyleBackColor = true;
-            this.button_Get_LocalIP.Click += new System.EventHandler(this.button_Get_LocalIP_Click);
+            this.button_Get_LocalIP.Click += new System.EventHandler(this.Button_Get_LocalIP_Click);
             // 
             // UserLogin
             // 

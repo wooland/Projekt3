@@ -45,8 +45,9 @@ namespace BAT
                 Listbox_of_Users.Items.Add(item.Name);
             }
         }
-        public Chatbox(BATContext context, TcpClient client, string user) : this()
+        public Chatbox(BATContext context, TcpClient client, string user, List<string> daList) : this()
         {
+            Listbox_of_Users.DataSource = daList;
             this.whichUser = user;
             this.Context = context;
             this.client = client;
@@ -107,13 +108,14 @@ namespace BAT
 
                     if (deSerializedMessage.Type == "Ok")
                     {
-                        messType = "We're through";
+                        
+                        Listbox_of_Users.DataSource = deSerializedMessage.Userlist;
                     }
                     else if (deSerializedMessage.Type == "SM")
                     {
                         timeStamp = DateTime.Now.ToShortTimeString();
                         ShowChatBox.Items.Add($"({timeStamp}) {deSerializedMessage.UserName}:{ deSerializedMessage.Message.ToString()}");
-
+                        Listbox_of_Users.DataSource = deSerializedMessage.Userlist;
                     }
                 }
             }

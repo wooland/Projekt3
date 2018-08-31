@@ -23,5 +23,7 @@ namespace NetSock
 
         public int RecieverPort { get; set; }
 
+        public List<string> Userlist { get; set; }
+
     }
 }
