@@ -37,13 +37,10 @@ namespace BAT
         {
             InitializeComponent();
             this.Context = context;
-            //TextBox_userIP.Text = "10.20.38.150";
             textBox_userName.Text = "BatMan";
             textBox_userPassword.Text = "BBBB";
             textBox_receiverPort.Text = "5000";
-            //TextBox_receiverIP.Text = "10.20.38.150";
             TextBox_userPort.Text = "5000";
-
             //pictureBox_loginImage.Image= Image.FromFile("../media/technology-c-sharp.png");
         }
 
@@ -77,9 +74,7 @@ namespace BAT
                 { Type = "Login", Version = 1, UserName = userName, Password = user_PassWord,
                     RecieverIP = reciever_IP, RecieverPort = reciever_port, UserIP = user_IP, UserPort = user_Port };
 
-
                 client = new TcpClient(p.RecieverIP, p.RecieverPort);
-                //Client client = new Client(tcpclient);
 
                 Thread batListener = new Thread(Listen);
                 batListener.Start();
@@ -137,10 +132,8 @@ namespace BAT
                     if (deSerializedMessage.Type == "Ok")
                     {
                         
-                        var x = new Chatbox(Context, client);
+                        var x = new Chatbox(Context, client, userName);
                         x.ShowDialog();
-                        //break;
-
                     }
                     else if (deSerializedMessage.Type == "SM")
                     {
