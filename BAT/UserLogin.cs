@@ -81,10 +81,6 @@ namespace BAT
 
                 Thread batThread = new Thread(SendProtocol);
                 batThread.Start(p);
-
-
-
-
                 batThread.Join();
             }
         }
